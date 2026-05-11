@@ -1,0 +1,225 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": {
+        "fa": "طراحی وبسایت لوکس",
+        "en": "Luxury Website Design"
+      },
+      "description": {
+        "fa": "طراحی و توسعه یک وبسایت کاملاً واکنش‌گرا با انیمیشن‌های پیشرفته و رابط کاربری مدرن. شامل طراحی UI/UX، پیاده‌سازی با آخرین تکنولوژی‌های وب و بهینه‌سازی کامل برای موتورهای جستجو.",
+        "en": "Design and development of a fully responsive website with advanced animations and modern UI. Includes UI/UX design, implementation with latest web technologies and full SEO optimization."
+      },
+      "category": "web-design",
+      "tags": [
+        "React",
+        "Next.js",
+        "Tailwind",
+        "Three.js",
+        "GSAP"
+      ],
+      "accentColor": "#D4AF37",
+      "featured": true,
+      "order": 1,
+      "images": [
+        "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop"
+      ],
+      "links": {
+        "live": "https://example.com",
+        "source": "https://github.com/cosmic-museum/project-1"
+      }
+    },
+    {
+      "id": 2,
+      "title": {
+        "fa": "اپلیکیشن موبایل مدرن",
+        "en": "Modern Mobile Application"
+      },
+      "description": {
+        "fa": "طراحی رابط کاربری اپلیکیشن موبایل با تمرکز بر تجربه کاربری بی‌نظیر. شامل طراحی متریال مدرن، انیمیشن‌های روان و پشتیبانی از حالت تاریک و روشن.",
+        "en": "Mobile app UI design with focus on exceptional user experience. Includes modern material design, smooth animations and dark/light mode support."
+      },
+      "category": "app",
+      "tags": [
+        "Flutter",
+        "Dart",
+        "Firebase",
+        "Material Design"
+      ],
+      "accentColor": "#C9A96E",
+      "featured": true,
+      "order": 2,
+      "images": [
+        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=800&h=500&fit=crop"
+      ],
+      "links": {
+        "live": "https://example.com/app",
+        "source": "https://github.com/cosmic-museum/project-2"
+      }
+    },
+    {
+      "id": 3,
+      "title": {
+        "fa": "برندینگ و هویت بصری",
+        "en": "Branding & Visual Identity"
+      },
+      "description": {
+        "fa": "خلق هویت بصری کامل شامل لوگو، پالت رنگی، تایپوگرافی و راهنمای برند برای یک استارتاپ فناوری. طراحی مینیمال و مدرن با رویکرد آینده‌نگر.",
+        "en": "Complete visual identity creation including logo, color palette, typography and brand guidelines for a tech startup. Minimal and modern design with futuristic approach."
+      },
+      "category": "branding",
+      "tags": [
+        "Logo Design",
+        "Brand Guide",
+        "Illustrator",
+        "Figma"
+      ],
+      "accentColor": "#B8941F",
+      "featured": false,
+      "order": 3,
+      "images": [
+        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&h=500&fit=crop"
+      ],
+      "links": {
+        "live": "https://behance.net/project-3",
+        "source": ""
+      }
+    },
+    {
+      "id": 4,
+      "title": {
+        "fa": "داشبورد مدیریتی پیشرفته",
+        "en": "Advanced Admin Dashboard"
+      },
+      "description": {
+        "fa": "طراحی و پیاده‌سازی داشبورد مدیریتی با قابلیت‌های Real-time، نمودارهای تعاملی، مدیریت کاربران و تنظیمات پیشرفته. کاملاً ریسپانسیو و بهینه‌سازی شده.",
+        "en": "Design and implementation of admin dashboard with real-time capabilities, interactive charts, user management and advanced settings. Fully responsive and optimized."
+      },
+      "category": "web-design",
+      "tags": [
+        "React",
+        "TypeScript",
+        "D3.js",
+        "WebSocket",
+        "PostgreSQL"
+      ],
+      "accentColor": "#D4AF37",
+      "featured": true,
+      "order": 4,
+      "images": [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=500&fit=crop"
+      ],
+      "links": {
+        "live": "https://dashboard-demo.example.com",
+        "source": "https://github.com/cosmic-museum/project-4"
+      }
+    },
+    {
+      "id": 5,
+      "title": {
+        "fa": "فروشگاه اینترنتی مدرن",
+        "en": "Modern E-Commerce Store"
+      },
+      "description": {
+        "fa": "طراحی فروشگاه اینترنتی کامل با سبد خرید، پرداخت آنلاین، مدیریت محصولات و پنل مشتریان. تجربه کاربری روان و طراحی جذاب برای افزایش فروش.",
+        "en": "Complete e-commerce store with shopping cart, online payment, product management and customer panel. Smooth UX and attractive design to boost sales."
+      },
+      "category": "web-design",
+      "tags": [
+        "Next.js",
+        "Stripe",
+        "MongoDB",
+        "Redux",
+        "Tailwind"
+      ],
+      "accentColor": "#C9A96E",
+      "featured": false,
+      "order": 5,
+      "images": [
+        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=500&fit=crop"
+      ],
+      "links": {
+        "live": "https://shop-demo.example.com",
+        "source": "https://github.com/cosmic-museum/project-5"
+      }
+    },
+    {
+      "id": 6,
+      "title": {
+        "fa": "موشن گرافیک تبلیغاتی",
+        "en": "Promotional Motion Graphics"
+      },
+      "description": {
+        "fa": "ساخت موشن گرافیک حرفه‌ای برای تبلیغات محصول با استفاده از تکنیک‌های پیشرفته انیمیشن، افکت‌های ویژه و صداگذاری حرفه‌ای.",
+        "en": "Professional motion graphics for product advertising using advanced animation techniques, special effects and professional sound design."
+      },
+      "category": "motion",
+      "tags": [
+        "After Effects",
+        "Cinema 4D",
+        "Premiere Pro",
+        "Audition"
+      ],
+      "accentColor": "#B8941F",
+      "featured": false,
+      "order": 6,
+      "images": [
+        "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=800&h=500&fit=crop",
+        "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&h=500&fit=crop"
+      ],
+      "links": {
+        "live": "https://vimeo.com/example",
+        "source": ""
+      }
+    },
+    {
+      "id": 1778478537743,
+      "title": {
+        "fa": "طراحی  و توسعه وب سایت فروشگاهی ",
+        "en": "Develop and design Shopify Web"
+      },
+      "description": {
+        "fa": "",
+        "en": ""
+      },
+      "category": "web-design",
+      "tags": [
+        "Html،Css",
+        "JavaScript",
+        "Node. js"
+      ],
+      "accentColor": "#d4af37",
+      "featured": false,
+      "order": 1,
+      "images": [
+        "https://raw.githubusercontent.com/mdn/interactive-examples/main/live-examples/css-examples/animal-crossing/1up.png"
+      ],
+      "links": {
+        "live": "https://raw.githubusercontent.com/mdn/interactive-examples/main/live-examples/css-examples/animal-crossing/1up.png",
+        "source": "https://raw.githubusercontent.com/mdn/interactive-examples/main/live-examples/css-examples/animal-crossing/1up.png"
+      }
+    }
+  ],
+  "settings": {
+    "siteName": {
+      "fa": "دیزاین و توسعه کهکشان",
+      "en": "Glaxy Des &Dev"
+    },
+    "tagline": {
+      "fa": "ما ایده‌ها را به کهکشان تبدیل می‌کنیم",
+      "en": "We transform ideas into galaxies"
+    },
+    "logo": "",
+    "primaryColor": "#D4AF37",
+    "socialLinks": {
+      "email": "contact@cosmicmuseum.com",
+      "github": "https://github.com/cosmic-museum",
+      "dribbble": "https://dribbble.com/cosmic-museum"
+    }
+  }
+}

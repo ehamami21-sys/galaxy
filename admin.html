@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت | Admin Panel</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #030712;
+            --bg-card: rgba(10, 10, 26, 0.6);
+            --text: #F5F0E8;
+            --text-secondary: #A09888;
+            --gold: #D4AF37;
+            --gold-light: #F5D061;
+            --border: rgba(212, 175, 55, 0.2);
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+        
+        [data-theme="light"] {
+            --bg: #F5F0E8;
+            --bg-card: rgba(255, 248, 240, 0.8);
+            --text: #1A1A1A;
+            --text-secondary: #4A4540;
+            --border: rgba(153, 101, 21, 0.3);
+        }
+        
+        body {
+            font-family: 'Vazirmatn', 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container { max-width: 1300px; margin: 0 auto; }
+        
+        header {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        h1 { font-size: 1.5rem; color: var(--gold); }
+        h2 { color: var(--text); margin-bottom: 1rem; }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn-gold { background: var(--gold); color: #000; }
+        .btn-gold:hover { box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+        .btn-outline { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+        .btn-outline:hover { background: var(--gold); color: #000; }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-success { background: var(--success); color: #fff; }
+        .btn-warning { background: var(--warning); color: #000; }
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        
+        .tab.active {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            font-weight: 700;
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        
+        .stat-card h3 { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .stat-card p { font-size: 1.8rem; font-weight: 700; color: var(--gold); }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 12px 16px;
+            text-align: right;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        td img {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            border-radius: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border);
+            margin: 2px;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-box {
+            background: var(--bg-card);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--gold);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: flex-end;
+        }
+        
+        .alert {
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .alert-success { background: rgba(34, 197, 94, 0.2); border: 1px solid var(--success); color: var(--success); display: block; }
+        .alert-error { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: var(--danger); display: block; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            header { flex-direction: column; text-align: center; }
+            .modal-box { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- هدر -->
+        <header>
+            <h1>⚙️ پنل مدیریت کهکشانی</h1>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-outline btn-sm" onclick="window.open('index.html', '_blank')">🌐 مشاهده سایت</button>
+                <button class="btn btn-warning btn-sm" onclick="refreshData()">🔄 بروزرسانی</button>
+            </div>
+        </header>
+        
+        <!-- تب‌ها -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('projects')">📁 پروژه‌ها</button>
+            <button class="tab" onclick="switchTab('add')">➕ افزودن پروژه</button>
+            <button class="tab" onclick="switchTab('settings')">⚙️ تنظیمات سایت</button>
+        </div>
+        
+        <!-- پیام‌ها -->
+        <div id="alertBox"></div>
+        
+        <!-- تب پروژه‌ها -->
+        <div class="tab-content active" id="tab-projects">
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>کل پروژه‌ها</h3>
+                    <p id="totalProjects">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>ویژه</h3>
+                    <p id="featuredCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>دسته‌بندی‌ها</h3>
+                    <p id="categoryCount">0</p>
+                </div>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>تصویر</th>
+                            <th>عنوان</th>
+                            <th>دسته‌بندی</th>
+                            <th>ترتیب</th>
+                            <th>ویژه</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projectsTableBody">
+                        <tr><td colspan="6" class="empty-state">در حال بارگذاری...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- تب افزودن -->
+        <div class="tab-content" id="tab-add">
+            <div class="modal-box" style="margin: 0 auto;">
+                <h2 id="formTitle">افزودن پروژه جدید</h2>
+                <form id="projectForm">
+                    <input type="hidden" id="projectId">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>عنوان فارسی *</label>
+                            <input type="text" id="titleFa" required>
+                        </div>
+                        <div class="form-group">
+                            <label>عنوان انگلیسی *</label>
+                            <input type="text" id="titleEn" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>توضیحات فارسی</label>
+                            <textarea rows="3" id="descFa"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>توضیحات انگلیسی</label>
+                            <textarea rows="3" id="descEn"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>دسته‌بندی</label>
+                            <select id="category">
+                                <option value="web-design">طراحی وب</option>
+                                <option value="app">اپلیکیشن</option>
+                                <option value="branding">برندینگ</option>
+                                <option value="ui-ux">UI/UX</option>
+                                <option value="motion">موشن گرافیک</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>رنگ تاکیدی</label>
+                            <input type="color" id="accentColor" value="#D4AF37" style="height: 42px; padding: 4px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>تگ‌ها (با کاما جدا کنید)</label>
+                        <input type="text" id="tags" placeholder="React, Next.js, Tailwind">
+                    </div>
+                    <div class="form-group">
+                        <label>لینک تصاویر (هر خط یک لینک)</label>
+                        <textarea rows="3" id="images" placeholder="https://picsum.photos/800/500?random=1"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>لینک نمایش آنلاین</label>
+                            <input type="url" id="liveUrl">
+                        </div>
+                        <div class="form-group">
+                            <label>لینک سورس کد</label>
+                            <input type="url" id="sourceUrl">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ترتیب نمایش</label>
+                            <input type="number" id="order" value="1" min="1">
+                        </div>
+                        <div class="form-group" style="display: flex; align-items: center; gap: 10px; padding-top: 1.5rem;">
+                            <input type="checkbox" id="featured" style="width: 20px; height: 20px;">
+                            <label>پروژه ویژه ⭐</label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="resetForm()">انصراف</button>
+                        <button type="submit" class="btn btn-gold">💾 ذخیره</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- تب تنظیمات -->
+        <div class="tab-content" id="tab-settings">
+            <div class="modal-box" style="margin: 0 auto;">
+                <h2>تنظیمات سایت</h2>
+                <form id="settingsForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>نام سایت (فارسی)</label>
+                            <input type="text" id="siteNameFa" required>
+                        </div>
+                        <div class="form-group">
+                            <label>نام سایت (انگلیسی)</label>
+                            <input type="text" id="siteNameEn" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>شعار (فارسی)</label>
+                            <input type="text" id="taglineFa">
+                        </div>
+                        <div class="form-group">
+                            <label>شعار (انگلیسی)</label>
+                            <input type="text" id="taglineEn">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ایمیل</label>
+                            <input type="email" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label>گیت‌هاب</label>
+                            <input type="url" id="github">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>دریبل</label>
+                        <input type="url" id="dribbble">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-gold">💾 ذخیره تنظیمات</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:3001';
+        let projects = [];
+        let settings = {};
+        
+        // ==============================================
+        // Load Data
+        // ==============================================
+        async function loadData() {
+            await Promise.all([fetchProjects(), fetchSettings()]);
+        }
+        
+        async function fetchProjects() {
+            try {
+                const res = await fetch(`${API_URL}/projects`);
+                projects = await res.json();
+                renderTable();
+                updateStats();
+            } catch (err) {
+                showAlert('خطا در اتصال به سرور. مطمئن شوید backend اجرا است.', 'error');
+            }
+        }
+        
+        async function fetchSettings() {
+            try {
+                const res = await fetch(`${API_URL}/settings`);
+                settings = await res.json();
+                fillSettingsForm();
+            } catch (err) {
+                console.error('Error fetching settings');
+            }
+        }
+        
+        window.refreshData = loadData;
+        
+        // ==============================================
+        // Render Table
+        // ==============================================
+        function renderTable() {
+            const tbody = document.getElementById('projectsTableBody');
+            
+            if (!projects.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">هیچ پروژه‌ای وجود ندارد</td></tr>';
+                return;
+            }
+            
+            const sorted = [...projects].sort((a, b) => (a.order || 0) - (b.order || 0));
+            
+            tbody.innerHTML = sorted.map(p => `
+                <tr>
+                    <td><img src="${p.images?.[0] || 'https://picsum.photos/60/40'}" alt=""></td>
+                    <td>
+                        <strong>${p.title?.fa || ''}</strong>
+                        <br><small style="color: var(--text-secondary)">${p.title?.en || ''}</small>
+                    </td>
+                    <td><span class="tag">${p.category || '-'}</span></td>
+                    <td>${p.order || 1}</td>
+                    <td>${p.featured ? '⭐' : '-'}</td>
+                    <td>
+                        <button class="btn btn-outline btn-sm" onclick="editProject(${p.id})">✏️</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteProject(${p.id})">🗑️</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function updateStats() {
+            document.getElementById('totalProjects').textContent = projects.length;
+            document.getElementById('featuredCount').textContent = projects.filter(p => p.featured).length;
+            const cats = [...new Set(projects.map(p => p.category))];
+            document.getElementById('categoryCount').textContent = cats.length;
+        }
+        
+        // ==============================================
+        // Tabs
+        // ==============================================
+        window.switchTab = function(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        };
+        
+        // ==============================================
+        // Form Management
+        // ==============================================
+        function resetForm() {
+            document.getElementById('projectForm').reset();
+            document.getElementById('projectId').value = '';
+            document.getElementById('formTitle').textContent = 'افزودن پروژه جدید';
+            document.getElementById('order').value = projects.length + 1;
+            switchTab('projects');
+        }
+        
+        window.resetForm = resetForm;
+        
+        window.editProject = function(id) {
+            const project = projects.find(p => p.id == id);
+            if (!project) return;
+            
+            document.getElementById('formTitle').textContent = 'ویرایش پروژه';
+            document.getElementById('projectId').value = project.id;
+            document.getElementById('titleFa').value = project.title?.fa || '';
+            document.getElementById('titleEn').value = project.title?.en || '';
+            document.getElementById('descFa').value = project.description?.fa || '';
+            document.getElementById('descEn').value = project.description?.en || '';
+            document.getElementById('category').value = project.category || 'web-design';
+            document.getElementById('accentColor').value = project.accentColor || '#D4AF37';
+            document.getElementById('tags').value = (project.tags || []).join(', ');
+            document.getElementById('images').value = (project.images || []).join('\n');
+            document.getElementById('liveUrl').value = project.links?.live || '';
+            document.getElementById('sourceUrl').value = project.links?.source || '';
+            document.getElementById('order').value = project.order || 1;
+            document.getElementById('featured').checked = project.featured || false;
+            
+            switchTab('add');
+        };
+        
+        // ==============================================
+        // Save Project
+        // ==============================================
+        document.getElementById('projectForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const projectData = {
+                id: document.getElementById('projectId').value || Date.now(),
+                title: {
+                    fa: document.getElementById('titleFa').value,
+                    en: document.getElementById('titleEn').value
+                },
+                description: {
+                    fa: document.getElementById('descFa').value,
+                    en: document.getElementById('descEn').value
+                },
+                category: document.getElementById('category').value,
+                tags: document.getElementById('tags').value.split(',').map(t => t.trim()).filter(Boolean),
+                accentColor: document.getElementById('accentColor').value,
+                featured: document.getElementById('featured').checked,
+                order: parseInt(document.getElementById('order').value) || 1,
+                images: document.getElementById('images').value.split('\n').map(u => u.trim()).filter(Boolean),
+                links: {
+                    live: document.getElementById('liveUrl').value,
+                    source: document.getElementById('sourceUrl').value
+                }
+            };
+            
+            const id = document.getElementById('projectId').value;
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `${API_URL}/projects/${id}` : `${API_URL}/projects`;
+            
+            try {
+                const res = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(projectData)
+                });
+                
+                if (res.ok) {
+                    showAlert(id ? '✅ پروژه ویرایش شد!' : '✅ پروژه افزوده شد!', 'success');
+                    resetForm();
+                    await fetchProjects();
+                } else {
+                    showAlert('❌ خطا در ذخیره پروژه', 'error');
+                }
+            } catch (err) {
+                showAlert('❌ خطا در اتصال به سرور', 'error');
+            }
+        });
+        
+        // ==============================================
+        // Delete Project
+        // ==============================================
+        window.deleteProject = async function(id) {
+            if (!confirm('آیا از حذف این پروژه اطمینان دارید؟')) return;
+            
+            try {
+                const res = await fetch(`${API_URL}/projects/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showAlert('🗑️ پروژه حذف شد!', 'success');
+                    await fetchProjects();
+                }
+            } catch (err) {
+                showAlert('❌ خطا در حذف پروژه', 'error');
+            }
+        };
+        
+        // ==============================================
+        // Settings Form
+        // ==============================================
+        function fillSettingsForm() {
+            document.getElementById('siteNameFa').value = settings.siteName?.fa || '';
+            document.getElementById('siteNameEn').value = settings.siteName?.en || '';
+            document.getElementById('taglineFa').value = settings.tagline?.fa || '';
+            document.getElementById('taglineEn').value = settings.tagline?.en || '';
+            document.getElementById('email').value = settings.socialLinks?.email || '';
+            document.getElementById('github').value = settings.socialLinks?.github || '';
+            document.getElementById('dribbble').value = settings.socialLinks?.dribbble || '';
+        }
+        
+        document.getElementById('settingsForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const settingsData = {
+                siteName: {
+                    fa: document.getElementById('siteNameFa').value,
+                    en: document.getElementById('siteNameEn').value
+                },
+                tagline: {
+                    fa: document.getElementById('taglineFa').value,
+                    en: document.getElementById('taglineEn').value
+                },
+                logo: settings.logo || '',
+                primaryColor: settings.primaryColor || '#D4AF37',
+                socialLinks: {
+                    email: document.getElementById('email').value,
+                    github: document.getElementById('github').value,
+                    dribbble: document.getElementById('dribbble').value
+                }
+            };
+            
+            try {
+                const res = await fetch(`${API_URL}/settings`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settingsData)
+                });
+                
+                if (res.ok) {
+                    showAlert('✅ تنظیمات ذخیره شد! سایت را رفرش کنید.', 'success');
+                }
+            } catch (err) {
+                showAlert('❌ خطا در ذخیره تنظیمات', 'error');
+            }
+        });
+        
+        // ==============================================
+        // Alert
+        // ==============================================
+        function showAlert(message, type) {
+            const box = document.getElementById('alertBox');
+            box.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => box.innerHTML = '', 3000);
+        }
+        
+        // ==============================================
+        // Init
+        // ==============================================
+        loadData();
+    </script>
+</body>
+</html>

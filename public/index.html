@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موزه کهکشانی | Cosmic Museum</title>
+    <meta name="description" content="پورتفولیوی حرفه‌ای با طراحی کهکشانی و شیشه‌ای">
+    
+    <!-- فونت‌ها -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- استایل -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- نشانگر موس -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+    
+    <!-- ناوبری -->
+    <nav class="navbar glass" id="navbar">
+        <div class="nav-brand">
+            <span class="text-gradient site-name" data-fa="موزه کهکشانی" data-en="Cosmic Museum">موزه کهکشانی</span>
+        </div>
+        <div class="nav-actions">
+            <button class="lang-btn glass" id="langToggle" title="تغییر زبان">
+                <span>EN</span>
+            </button>
+            <button class="theme-btn glass" id="themeToggle" title="تغییر تم">
+                <span>☀️</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- بخش Hero -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="text-gradient site-name" data-fa="موزه کهکشانی" data-en="Cosmic Museum">موزه کهکشانی</span>
+            </h1>
+            <p class="hero-subtitle" data-fa="ما ایده‌ها را به کهکشان تبدیل می‌کنیم" data-en="We transform ideas into galaxies">
+                ما ایده‌ها را به کهکشان تبدیل می‌کنیم
+            </p>
+            <button class="btn-gold" onclick="scrollToProjects()">
+                <span data-fa="مشاهده پروژه‌ها" data-en="View Projects">مشاهده پروژه‌ها</span>
+            </button>
+        </div>
+    </section>
+    
+    <!-- بخش گالری -->
+    <section class="projects" id="projects">
+        <h2 class="section-title">
+            <span class="text-gradient" data-fa="گالری کهکشانی" data-en="Cosmic Gallery">گالری کهکشانی</span>
+        </h2>
+        <div class="divider-gold"></div>
+        <div class="projects-grid" id="projectsGrid"></div>
+    </section>
+    
+    <!-- بخش تماس -->
+    <section class="contact" id="contact">
+        <h2 class="section-title">
+            <span class="text-gradient" data-fa="تماس با ما" data-en="Contact Us">تماس با ما</span>
+        </h2>
+        <div class="divider-gold"></div>
+        <div class="contact-form glass-strong">
+            <form id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-fa="نام" data-en="Name">نام</label>
+                        <input type="text" required class="input-glass">
+                    </div>
+                    <div class="form-group">
+                        <label data-fa="ایمیل" data-en="Email">ایمیل</label>
+                        <input type="email" required class="input-glass">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-fa="پیام" data-en="Message">پیام</label>
+                    <textarea rows="5" required class="input-glass"></textarea>
+                </div>
+                <button type="submit" class="btn-gold">
+                    <span data-fa="ارسال پیام" data-en="Send Message">ارسال پیام</span>
+                </button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- فوتر -->
+    <footer>
+        <p>© <span id="year"></span> <span class="site-name" data-fa="موزه کهکشانی" data-en="Cosmic Museum">موزه کهکشانی</span></p>
+    </footer>
+    
+    <!-- مودال پروژه -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content glass-strong">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <img src="" alt="" class="modal-image" id="modalImage">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-tags" id="modalTags"></div>
+                <div class="modal-links" id="modalLinks"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- اسکریپت -->
+    <script src="script.js"></script>
+</body>
+</html>
