@@ -1,8 +1,21 @@
 // ==============================================
-// COSMIC MUSEUM - Main Script
 // ==============================================
+const DEFAULT_PROJECTS = [
+    {
+        id: 1,
+        title: { fa: 'طراحی وبسایت لوکس', en: 'Luxury Website' },
+        description: { fa: 'توضیح فارسی', en: 'English description' },
+        category: 'web-design',
+        tags: ['React', 'Next.js'],
+        accentColor: '#D4AF37',
+        featured: true,
+        order: 1,
+        images: ['https://picsum.photos/800/500?random=1'],
+        links: { live: '#', source: '#' }
+    }
+];
 
-const API_URL = 'http://localhost:3001';
+const API_URL = '';
 
 let currentLang = localStorage.getItem('cosmic-lang') || 'fa';
 let currentTheme = localStorage.getItem('cosmic-theme') || 'dark';
@@ -23,18 +36,21 @@ const yearSpan = document.getElementById('year');
 
 // ==============================================
 // API Functions
-// ==============================================
 async function fetchProjects() {
     try {
-        const res = await fetch(`${API_URL}/projects`);
-        projects = await res.json();
+        if (API_URL) {
+            const res = await fetch(`${API_URL}/projects`);
+            projects = await res.json();
+        } else {
+            // استفاده از دیتای مستقیم برای Netlify
+            projects = DEFAULT_PROJECTS;
+        }
         renderProjects();
     } catch (err) {
-        console.error('Error fetching projects:', err);
-        projects = [];
+        projects = DEFAULT_PROJECTS;
         renderProjects();
     }
-}
+}// ============================================
 
 async function fetchSettings() {
     try {
