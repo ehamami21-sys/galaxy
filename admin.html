@@ -447,7 +447,21 @@
     </div>
     
     <script>
-        const API_URL = 'http://localhost:3001';
+const DEFAULT_ADMIN_PROJECTS = [
+    {
+        id: 1,
+        title: { fa: 'طراحی وبسایت لوکس', en: 'Luxury Website' },
+        description: { fa: 'توضیح فارسی', en: 'English description' },
+        category: 'web-design',
+        tags: ['React', 'Next.js'],
+        accentColor: '#D4AF37',
+        featured: true,
+        order: 1,
+        images: ['https://picsum.photos/800/500?random=1'],
+        links: { live: '#', source: '#' }
+    }
+];
+        const API_URL = '';
         let projects = [];
         let settings = {};
         
@@ -458,16 +472,22 @@
             await Promise.all([fetchProjects(), fetchSettings()]);
         }
         
-        async function fetchProjects() {
-            try {
-                const res = await fetch(`${API_URL}/projects`);
-                projects = await res.json();
-                renderTable();
-                updateStats();
-            } catch (err) {
-                showAlert('خطا در اتصال به سرور. مطمئن شوید backend اجرا است.', 'error');
-            }
+       async function fetchProjects() {
+    try {
+        if (API_URL) {
+            const res = await fetch(`${API_URL}/projects`);
+            projects = await res.json();
+        } else {
+            projects = JSON.parse(localStorage.getItem('admin-projects')) || DEFAULT_ADMIN_PROJECTS;
         }
+        renderTable();
+        updateStats();
+    } catch (err) {
+        projects = DEFAULT_ADMIN_PROJECTS;
+        renderTable();
+        updateStats();
+    }
+}
         
         async function fetchSettings() {
             try {
